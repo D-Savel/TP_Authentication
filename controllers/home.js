@@ -11,10 +11,9 @@ export function userFormController(req, res) {
 
 export async function userRegisterController(req, res) {
   const { firstName, lastName, email, password } = req.body;
-  await mongoose.connect(process.env.MONGO_TP_USERS_URL);
-
 
   try {
+    await mongoose.connect(process.env.MONGO_TP_USERS_URL);
     const userExists = await UserModel.findOne({ email })
     console.log(userExists);
     if (!userExists) {
@@ -22,7 +21,7 @@ export async function userRegisterController(req, res) {
       const user = { firstName, lastName, email, password: hash }
       await UserModel.insertMany(user);
       console.log({ status: 'user registered', user: user.firstName });
-      res.redirect('/')
+      res.redirect('/login')
     } else {
       res.status(500).json({ status: 'error', message: 'user already exists' })
     }
