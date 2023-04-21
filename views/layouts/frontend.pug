@@ -14,11 +14,14 @@ html(lang="en")
     body
 
         .ui.inverted.menu
-            a.item.active
+            a.item.active(href="/")
                 i.home.icon
                 | Home
-            a.item
+            a.item(href="/login")
                 i.file.icon
                 | Login
+            a.item(href="/dashboard")
+                i.lock.icon
+                | Dashboard
 
         block content
