@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import session from "express-session";
+import MongoStore from 'connect-mongo';
 
 import route from "./routes/routes.js";
 
@@ -10,7 +12,7 @@ import route from "./routes/routes.js";
 // ==========
 
 dotenv.config();
-const { APP_HOSTNAME, APP_PORT, NODE_ENV } = process.env;
+const { APP_HOSTNAME, APP_PORT, NODE_ENV, APP_SECRET, MONGO_SESSIONS_URL } = process.env;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -23,6 +25,16 @@ app.locals.pretty = (NODE_ENV !== 'production'); // Indente correctement le HTML
 // ==========
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: false }));
+app.use(session({
+  name: 'authentication-project',
+  secret: APP_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: MONGO_SESSIONS_URL }),
+  cookie: { maxAge: 180 * 60 * 1000 } // on détermine la durée de vie de la session
+}));
+
 
 // ==========
 // App routers

@@ -16,4 +16,4 @@ mixin field(type, name, placeholder)
   .field
     .ui.left.icon.input
       i.icon(class=(type === 'password' ? 'lock' : 'user'))
-      input(type=type, name=name, placeholder=placeholder)
+      input(type=type, name=name, placeholder=placeholder, required)
