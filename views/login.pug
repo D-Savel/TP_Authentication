@@ -1,19 +1,38 @@
 extends layouts/frontend
 
 block content
-  .ui.middle.aligned.center.aligned.grid
-    .six.wide.column
-      form.ui.large.form(method="post" action="/login")
-        .ui.stacked.segment
-          +field('email', 'email', 'your.email@address.tld')
-          +field('password', 'password', 'Password')
-          button(type="submit").ui.fluid.large.teal.submit.button Login
 
-        .ui.error.message
+  h1(class='w-100 text-center bg-light mb-5') Login
 
+  .div(class='container mt-3')
+    if flash_success.length >0
+      div(class="alert alert-success w-50 m-auto my-3")
+        each message in flash_success
+          p(class='mb-1 fs-5')= message
+
+    if flash_failure.length> 0
+      div(class="p-1 alert alert-danger w-50 m-auto my-3")
+        ul
+          each message in flash_failure
+            li(class='mb-1 ms-5 fs-4')= message
+
+    #errorMessage
+    -console.log(errorMessage)
+    if (errorMessage)
+      div(class='error alert alert-danger w-50 m-auto mb-3 py-2 fs-4')= errorMessage 
+
+    .ui.middle.aligned.center.aligned.grid
+      .seven.wide.column
+        form.ui.large.form(method="post" action="/login")
+          .ui.stacked.segment
+            +field('email', 'email', 'your.email@address.tld')
+            +field('password', 'password', 'Password')
+            button(type="submit").ui.fluid.large.teal.submit.button Login
+
+          .ui.error.message
 
 mixin field(type, name, placeholder)
   .field
     .ui.left.icon.input
       i.icon(class=(type === 'password' ? 'lock' : 'user'))
-      input(type=type, name=name, placeholder=placeholder, required)
+      input(type=type, name=name, value='', placeholder=placeholder)

@@ -1,3 +1,4 @@
 export default function dashboard(req, res) {
-  res.render("dashboard");
+  const isLogged = true
+  res.render("dashboard", { isLogged });
 }

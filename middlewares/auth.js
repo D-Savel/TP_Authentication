@@ -3,6 +3,6 @@ export default function isAuthenticated(req, res, next) {
     next();
     return;
   }
-  console.log('Error: you are not log');
-  res.redirect("/login");
+  const errorMessage = "You must be logged to access Dashboard !";
+  res.render("login", { errorMessage });
 }

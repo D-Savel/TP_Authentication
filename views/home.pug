@@ -1,22 +1,35 @@
 extends layouts/frontend
 
 block content
-    .ui.middle.aligned.center.aligned.grid
-        .six.wide.column
-            form.ui.large.form(method="post" action="/")
-                .ui.stacked.segment
-                    +field('text', 'firstName', 'First name')
-                    +field('text', 'lastName', 'Last name')
-                    +field('email', 'email', 'your.email@address.tld')
-                    +field('password', 'password', 'Password')
-                    +field('password', 'password_confirm', 'Confirm password')
-                    button(type="submit").ui.fluid.large.teal.submit.button Register
 
-                .ui.error.message
+    h1(class='w-100 text-center bg-light mb-5') Register new user
+
+    .div(class='container mt-3')
+        if flash_failure.length >0
+            div(class="p-1 alert alert-danger w-50 m-auto my-3")
+                ul
+                each message in flash_failure
+                    li(class='mb-1 ms-5 fs-4')= message
+
+
+    .div(class='container mt-3')
+        .ui.middle.aligned.center.aligned.grid
+            .seven.wide.column
+                form.ui.large.form(method="post" action="/")
+                    .ui.stacked.segment
+                        +field('text', 'firstName', 'First name')
+                        +field('text', 'lastName', 'Last name')
+                        +field('text', 'email', 'your.email@address.tld')
+                        +field('password', 'password', 'Password')
+                        +field('password', 'password_confirm', 'Confirm password')
+                        button(type="submit").ui.fluid.large.teal.submit.button Register
+
+                    .ui.error.message
 
 
 mixin field(type, name, placeholder)
     .field
-        .ui.left.icon.input
-            i.icon(class=(type === 'password' ? 'lock' : 'user'))
-            input(type=type, name=name, placeholder=placeholder, required)
+    .ui.left.icon.input
+        #user
+        i.icon(class=(type === 'password' ? 'lock' : 'user'))
+        input(type=type, name=name,value=user[name], placeholder=placeholder)

@@ -1,6 +1,14 @@
 extends layouts/frontend
 
 block content
-  h1 Dashboard
-  button Logout
-    a(href='/sessionDestroy')
+
+  h1(class='w-100 text-center bg-light mb-5') Dashboard
+
+  if flash_success.length >0
+    div(class="alert alert-success w-50 m-auto my-3")
+      each message in flash_success
+        p(class='mb-1 fs-5')= message
+
+  p(class='ms-2') Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam consequuntur in ea. Incidunt officia porro quae nobis excepturi, rerum esse animi praesentium sapiente hic voluptatem libero fugiat ullam maiores recusandae.
+  p(class='ms-2') Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur voluptatum alias esse ipsam blanditiis at. Omnis aut illo cumque magni natus, commodi fuga quasi asperiores rerum? Quia labore ut dolore!
+

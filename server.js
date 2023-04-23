@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import session from "express-session";
 import MongoStore from 'connect-mongo';
-
+import flash from "connect-flash"
 import route from "./routes/routes.js";
 
 // ==========
@@ -34,6 +34,14 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: MONGO_SESSIONS_URL }),
   cookie: { maxAge: 180 * 60 * 1000 } // on détermine la durée de vie de la session
 }));
+
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.flash_success = req.flash("success"); // Consomme les messages flash
+  res.locals.flash_failure = req.flash("failure");
+  next();
+});
 
 
 // ==========
